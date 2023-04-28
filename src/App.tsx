@@ -1,22 +1,20 @@
 import { useEffect } from "react";
 import { useCoordsStore } from "./store/coordsStore";
-import { shallow } from "zustand/shallow";
 import { useCurrentWeather } from "./hooks/useCurrentWeather";
+import { useWeatherCurrentLocation } from "./store/weatherCurrentLocation";
 
 function App() {
-  const { data, isLoading } = useCurrentWeather(-36.233373, -61.1139126);
-
-  console.log({ data });
-
-  const { lat, lng } = useCoordsStore(
-    (state) => ({
-      lat: state.lat,
-      lng: state.lng,
-    }),
-    shallow
-  );
-
+  const { data, isLoading } = useCurrentWeather();
   const { setCoords } = useCoordsStore();
+  const { setCurrentWeather } = useWeatherCurrentLocation();
+  const { city, temp, feels_like, description } = useWeatherCurrentLocation(
+    (state) => ({
+      city: state.city,
+      temp: state.temp,
+      feels_like: state.feels_like,
+      description: state.description,
+    })
+  );
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -25,11 +23,25 @@ function App() {
       });
     }
   }, [setCoords]);
+
+  useEffect(() => {
+    if (data) {
+      setCurrentWeather(
+        data.name,
+        data.main.temp,
+        data.main.feels_like,
+        data.weather[0].description
+      );
+    }
+  }, [data]);
+
   return (
     <>
-      <h1>Latitude: {lat}</h1>
-      <h1>Longitude: {lng}</h1>
       {isLoading && <h1>Loading...</h1>}
+      <h3>City: {city}</h3>
+      <h3>Temp: {temp}</h3>
+      <h3>Feels like: {feels_like}</h3>
+      <h3>Description: {description}</h3>
     </>
   );
 }
