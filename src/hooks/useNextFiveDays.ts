@@ -2,33 +2,19 @@ import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import { openWeatherApi } from "../api/openWeather";
 import { useLocationStore } from "../store/locationStore";
 
-export interface ForecastType {
-  coord: Coord;
-  weather: Weather[];
-  base: string;
-  main: Main;
-  visibility: number;
-  wind: Wind;
-  clouds: Clouds;
+export interface NextForecastDaysType {
   dt: number;
+  main: Main;
+  weather: Weather[];
+  clouds: Clouds;
+  wind: Wind;
+  visibility: number;
+  pop: number;
   sys: Sys;
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
+  dt_txt: string;
+  rain?: Rain;
 }
 
-export interface Coord {
-  lon: number;
-  lat: number;
-}
-
-export interface Weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-}
 export interface Main {
   temp: number;
   feels_like: number;
@@ -40,37 +26,49 @@ export interface Main {
   humidity: number;
   temp_kf: number;
 }
+
+export interface Weather {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
+export interface Clouds {
+  all: number;
+}
+
 export interface Wind {
   speed: number;
   deg: number;
   gust: number;
 }
-export interface Clouds {
-  all: number;
-}
+
 export interface Sys {
-  country: string;
-  sunrise: number;
-  sunset: number;
+  pod: string;
 }
 
-const fetchCurrentWeather = async (ctx: QueryFunctionContext) => {
+export interface Rain {
+  "3h": number;
+}
+
+const fetchNextFiveDays = async (ctx: QueryFunctionContext) => {
   const [_, city_name] = ctx.queryKey;
   if (!city_name) return null;
 
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-  const url = `weather?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
-  const { data } = await openWeatherApi.get<ForecastType>(url);
+  const url = `forecast?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
+  const { data } = await openWeatherApi.get(url);
 
   return data;
 };
 
-export const useCurrentWeather = () => {
+export const useNextFiveDays = () => {
   const { city_name } = useLocationStore((state) => ({
     city_name: state.city_name,
   }));
 
-  const queryKey = ["currentWeather", city_name];
-  const fetcher = fetchCurrentWeather;
+  const queryKey = ["nextFiveDays", city_name];
+  const fetcher = fetchNextFiveDays;
   return useQuery(queryKey, fetcher);
 };
