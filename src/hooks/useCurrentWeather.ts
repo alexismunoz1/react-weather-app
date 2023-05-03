@@ -5,11 +5,12 @@ import { ForecastType } from "./types";
 
 const fetchCurrentWeather = async (ctx: QueryFunctionContext) => {
   const [_, city_name] = ctx.queryKey;
+  if (!city_name) return null;
+
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-
   const url = `weather?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
-
   const { data } = await openWeatherApi.get<ForecastType>(url);
+  
   return data;
 };
 

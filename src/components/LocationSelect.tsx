@@ -5,11 +5,11 @@ import { useLocationStore } from "../store/locationStore";
 
 export const LocationSelect = () => {
   const { setCityName } = useLocationStore();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("Buenos Aires");
 
   useEffect(() => {
     setCityName(value);
-  }, [value, setCityName]);
+  }, []);
 
   const city_names = ["Buenos Aires", "New York", "Tokyo"];
 
