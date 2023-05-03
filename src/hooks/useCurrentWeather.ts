@@ -24,11 +24,11 @@ const fetchCurrentWeather = async (ctx: QueryFunctionContext) => {
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
   let url: string;
-  
-  if (cityName) {
-    url = `weather?q=${cityName}&lang=es&appid=${apiKey}&units=metric`;
-  } else if (lat && lng) {
+
+  if (lat && lng) {
     url = `weather?lat=${lat}&lon=${lng}&lang=es&appid=${apiKey}&units=metric`;
+  } else if (cityName) {
+    url = `weather?q=${cityName}&lang=es&appid=${apiKey}&units=metric`;
   } else {
     throw new Error("Invalid query params");
   }

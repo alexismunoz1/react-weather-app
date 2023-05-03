@@ -4,10 +4,8 @@ import { FiMapPin } from "react-icons/fi";
 import { useLocationStore } from "../store/locationStore";
 
 export const LocationSelect = () => {
-  const { setCityName } = useLocationStore();
-  const [value, setValue] = useState("");
-
-  const { setCoords } = useLocationStore();
+  const { setCityName, setCoords } = useLocationStore();
+  const [cityNameValue, setCityNameValue] = useState("Buenos Aires");
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -16,23 +14,24 @@ export const LocationSelect = () => {
   }, []);
 
   useEffect(() => {
-    setCityName(value);
-  }, [value]);
+    setCityName(cityNameValue);
+    setCoords(null, null);
+  }, [cityNameValue, setCityName]);
 
   const city_names = [
     "Buenos Aires",
-    "Tucuman",
+    "Rosario",
     "Entre Rios",
     "Mendoza",
-    "Rosario",
+    "San Miguel de Tucumán",
   ];
 
   return (
     <>
       <NativeSelect
         data={city_names}
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
+        value={cityNameValue}
+        onChange={(event) => setCityNameValue(event.currentTarget.value)}
         label="Select your city"
         icon={<FiMapPin />}
       />

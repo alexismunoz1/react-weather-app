@@ -11,7 +11,7 @@ import {
   Wind,
 } from "../lib/weatherTypes";
 
-export interface NextForecastDaysListResponse {
+export interface NextForecastDays {
   cod: string;
   message: number;
   cnt: number;
@@ -33,22 +33,31 @@ export interface NextForecastDaysList {
 }
 
 const fetchNextFiveDays = async (ctx: QueryFunctionContext) => {
-  const [_, city_name] = ctx.queryKey;
-  if (!city_name) return null;
-
+  const [, lat, lng, cityName] = ctx.queryKey;
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-  const url = `forecast?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
-  const { data } = await openWeatherApi.get<NextForecastDaysListResponse>(url);
+
+  let url: string;
+  if (lat && lng) {
+    url = `forecast?lat=${lat}&lon=${lng}&lang=es&appid=${apiKey}&units=metric`;
+  } else if (cityName) {
+    url = `forecast?q=${cityName}&lang=es&appid=${apiKey}&units=metric`;
+  } else {
+    throw new Error("Invalid query params");
+  }
+
+  const { data } = await openWeatherApi.get<NextForecastDays>(url);
 
   return data;
 };
 
 export const useNextFiveDays = () => {
-  const { city_name } = useLocationStore((state) => ({
+  const { lat, lng, city_name } = useLocationStore((state) => ({
+    lat: state.lat,
+    lng: state.lng,
     city_name: state.city_name,
   }));
 
-  const queryKey = ["nextFiveDays", city_name];
+  const queryKey = ["nextFiveDays", lat, lng, city_name];
   const fetcher = fetchNextFiveDays;
   return useQuery(queryKey, fetcher);
 };

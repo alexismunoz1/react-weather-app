@@ -5,7 +5,7 @@ interface CoordsStore {
   lng: number | null;
   city_name: string;
   setCityName: (city_name: string) => void;
-  setCoords: (lat: number, lng: number) => void;
+  setCoords: (lat: number | null, lng: number | null) => void;
 }
 
 export const useLocationStore = create<CoordsStore>((set) => ({
@@ -13,5 +13,6 @@ export const useLocationStore = create<CoordsStore>((set) => ({
   lng: null,
   city_name: "",
   setCityName: (city_name) => set(() => ({ city_name })),
-  setCoords: (lat: number, lng: number) => set(() => ({ lat, lng })),
+  setCoords: (lat: number | null, lng: number | null) =>
+    set(() => ({ lat, lng })),
 }));
