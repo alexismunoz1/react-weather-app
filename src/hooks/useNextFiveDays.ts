@@ -2,7 +2,15 @@ import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import { openWeatherApi } from "../api/openWeather";
 import { useLocationStore } from "../store/locationStore";
 
-export interface NextForecastDaysType {
+export interface NextForecastDaysListResponse {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: NextForecastDaysList[];
+  city: City;
+}
+
+export interface NextForecastDaysList {
   dt: number;
   main: Main;
   weather: Weather[];
@@ -13,6 +21,22 @@ export interface NextForecastDaysType {
   sys: Sys;
   dt_txt: string;
   rain?: Rain;
+}
+
+export interface City {
+  id: number;
+  name: string;
+  coord: Coord;
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+}
+
+export interface Coord {
+  lat: number;
+  lon: number;
 }
 
 export interface Main {
@@ -58,7 +82,7 @@ const fetchNextFiveDays = async (ctx: QueryFunctionContext) => {
 
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
   const url = `forecast?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
-  const { data } = await openWeatherApi.get(url);
+  const { data } = await openWeatherApi.get<NextForecastDaysListResponse>(url);
 
   return data;
 };
