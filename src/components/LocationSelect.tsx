@@ -11,7 +11,7 @@ export const LocationSelect = () => {
     setCityName(value);
   }, [value]);
 
-  const city_names = ["Buenos Aires", "New York", "Tokyo"];
+  const city_names = ["Buenos Aires", "Tucuman", "Entre Rios", "Mendoza", "Rosario"];
 
   return (
     <>

@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { NextForecastDaysType } from "../hooks/useNextFiveDays";
+import { NextForecastDaysList} from "../hooks/useNextFiveDays";
 
 /**
  * Formats a given date string in the format "YYYY-MM-DD HH:mm:ss"
@@ -27,14 +27,12 @@ function formatHour(dateText: string): string {
   return `${hour}:00`;
 }
 
-type GroupedData = {
+export type GroupedData = {
   dayOfWeek: string;
   data: Array<{
     hour_of_temp: string;
     temp: number;
     feels_like: number;
-    temp_min: number;
-    temp_max: number;
     weather: {
       id: number;
       main: string;
@@ -50,7 +48,7 @@ type GroupedData = {
  * @returns Array of grouped forecast data
  */
 export function groupDataByDay(
-  forecastDays: Array<NextForecastDaysType>
+  forecastDays: Array<NextForecastDaysList>
 ): Array<GroupedData> {
   const groupedData: Array<GroupedData> = [];
 
@@ -63,8 +61,6 @@ export function groupDataByDay(
       hour_of_temp: formatHour(day.dt_txt),
       temp: day.main.temp,
       feels_like: day.main.feels_like,
-      temp_min: day.main.temp_min,
-      temp_max: day.main.temp_max,
       weather: day.weather[0],
     };
 
