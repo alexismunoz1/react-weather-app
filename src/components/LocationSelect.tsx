@@ -5,13 +5,27 @@ import { useLocationStore } from "../store/locationStore";
 
 export const LocationSelect = () => {
   const { setCityName } = useLocationStore();
-  const [value, setValue] = useState("Buenos Aires");
+  const [value, setValue] = useState("");
+
+  const { setCoords } = useLocationStore();
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCoords(position.coords.latitude, position.coords.longitude);
+    });
+  }, []);
 
   useEffect(() => {
     setCityName(value);
   }, [value]);
 
-  const city_names = ["Buenos Aires", "Tucuman", "Entre Rios", "Mendoza", "Rosario"];
+  const city_names = [
+    "Buenos Aires",
+    "Tucuman",
+    "Entre Rios",
+    "Mendoza",
+    "Rosario",
+  ];
 
   return (
     <>

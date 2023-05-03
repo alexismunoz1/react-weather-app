@@ -1,6 +1,15 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import { openWeatherApi } from "../api/openWeather";
 import { useLocationStore } from "../store/locationStore";
+import {
+  City,
+  Clouds,
+  Main,
+  Rain,
+  Sys,
+  Weather,
+  Wind,
+} from "../lib/weatherTypes";
 
 export interface NextForecastDaysListResponse {
   cod: string;
@@ -21,59 +30,6 @@ export interface NextForecastDaysList {
   sys: Sys;
   dt_txt: string;
   rain?: Rain;
-}
-
-export interface City {
-  id: number;
-  name: string;
-  coord: Coord;
-  country: string;
-  population: number;
-  timezone: number;
-  sunrise: number;
-  sunset: number;
-}
-
-export interface Coord {
-  lat: number;
-  lon: number;
-}
-
-export interface Main {
-  temp: number;
-  feels_like: number;
-  temp_min: number;
-  temp_max: number;
-  pressure: number;
-  sea_level: number;
-  grnd_level: number;
-  humidity: number;
-  temp_kf: number;
-}
-
-export interface Weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-}
-
-export interface Clouds {
-  all: number;
-}
-
-export interface Wind {
-  speed: number;
-  deg: number;
-  gust: number;
-}
-
-export interface Sys {
-  pod: string;
-}
-
-export interface Rain {
-  "3h": number;
 }
 
 const fetchNextFiveDays = async (ctx: QueryFunctionContext) => {
