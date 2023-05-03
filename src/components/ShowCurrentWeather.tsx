@@ -2,7 +2,7 @@ import { ForecastType } from "../hooks/useCurrentWeather";
 import { createStyles, Group, Stack, Text } from "@mantine/core";
 import { formatTemperature } from "../lib/functions";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   description: {
     fontSize: "2rem",
     fontWeight: 700,
