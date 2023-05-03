@@ -8,7 +8,6 @@ import { ShowNextFiveDays } from "./components/ShowNextFiveDays";
 import { useCurrentWeather } from "./hooks/useCurrentWeather";
 import { useNextFiveDays } from "./hooks/useNextFiveDays";
 import { GroupedData, groupDataByDay } from "./lib/functions";
-import { useLocationStore } from "./store/locationStore";
 
 function App() {
   const [nextFiveDaysData, setNextFiveDaysData] = useState<GroupedData[]>();
