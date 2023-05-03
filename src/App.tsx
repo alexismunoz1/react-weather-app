@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { ShowCurrentWeather } from "./components/ShowCurrentWeather";
-import { LocationSelect } from "./components/LocationSelect";
 import { ShowNextFiveDays } from "./components/ShowNextFiveDays";
 import { Header } from "./components/Header";
 
