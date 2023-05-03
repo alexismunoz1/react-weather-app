@@ -1,5 +1,6 @@
 import moment from "moment-timezone";
 import { NextForecastDaysList } from "../hooks/useNextFiveDays";
+import { Main, Weather } from "./weatherTypes";
 
 /**
  * Formats a given date string in the format "YYYY-MM-DD HH:mm:ss"
@@ -33,12 +34,11 @@ export type GroupedData = {
     hour_of_temp: string;
     temp: number;
     feels_like: number;
-    weather: {
-      id: number;
-      main: string;
-      description: string;
-      icon: string;
-    };
+    temp_min: number;
+    temp_max: number;
+    weather: Weather;
+    pop: number;
+    main: Main;
   }>;
 };
 
@@ -61,7 +61,11 @@ export function groupDataByDay(
       hour_of_temp: formatHour(day.dt_txt),
       temp: day.main.temp,
       feels_like: day.main.feels_like,
+      temp_min: day.main.temp_min,
+      temp_max: day.main.temp_max,
       weather: day.weather[0],
+      pop: day.pop,
+      main: day.main,
     };
 
     if (group) {
@@ -74,9 +78,15 @@ export function groupDataByDay(
     }
   });
 
-  return groupedData;
+  return groupedData.slice(1);
 }
 
+/**
+ * Formats a temperature value in Celsius or Fahrenheit based on the given temperature unit.
+ * @param {string} tempUnit The unit of temperature to format the temperature value to.
+ * @param {number} temp The temperature value to format.
+ * @returns {string} The formatted temperature string.
+ */
 export function formatTemperature(tempUnit: string, temp: number): string {
   const temperature = tempUnit === "c" ? temp : temp * 1.8 + 32;
 
