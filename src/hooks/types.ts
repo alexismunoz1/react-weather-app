@@ -1,4 +1,4 @@
-export interface CurrentWeatherByCoords {
+export interface ForecastType {
   coord: Coord;
   weather: Weather[];
   base: string;
@@ -12,6 +12,27 @@ export interface CurrentWeatherByCoords {
   id: number;
   name: string;
   cod: number;
+}
+
+export interface NextForecastDaysType {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: ListDays[];
+  city: City;
+}
+
+export interface ListDays {
+  dt: number;
+  main: Main;
+  weather: Weather[];
+  clouds: Clouds;
+  wind: Wind;
+  visibility: number;
+  pop: number;
+  sys: SysNextDay;
+  dt_txt: string;
+  rain?: Rain;
 }
 
 export interface Coord {
@@ -32,9 +53,10 @@ export interface Main {
   temp_min: number;
   temp_max: number;
   pressure: number;
-  humidity: number;
   sea_level: number;
   grnd_level: number;
+  humidity: number;
+  temp_kf: number;
 }
 
 export interface Wind {
@@ -51,4 +73,23 @@ export interface Sys {
   country: string;
   sunrise: number;
   sunset: number;
+}
+
+export interface SysNextDay {
+  pod: string;
+}
+
+export interface City {
+  id: number;
+  name: string;
+  coord: Coord;
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+}
+
+export interface Rain {
+  "3h": number;
 }

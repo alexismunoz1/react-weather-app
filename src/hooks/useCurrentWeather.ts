@@ -1,30 +1,24 @@
-import { openWeatherApi } from "../api/openWeather";
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import { CurrentWeatherByCoords } from "./types";
-import { useCoordsStore } from "../store/coordsStore";
-import { shallow } from "zustand/shallow";
+import { openWeatherApi } from "../api/openWeather";
+import { useLocationStore } from "../store/locationStore";
+import { ForecastType } from "./types";
 
 const fetchCurrentWeather = async (ctx: QueryFunctionContext) => {
-  const [_, lat, lng] = ctx.queryKey;
-  const api_key = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
+  const [_, city_name] = ctx.queryKey;
+  const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
-  const { data } = await openWeatherApi.get<CurrentWeatherByCoords>(
-    `weather?lang=es&lat=${lat}&lon=${lng}&appid=${api_key}&units=metric`
-  );
+  const url = `weather?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
+
+  const { data } = await openWeatherApi.get<ForecastType>(url);
   return data;
 };
 
 export const useCurrentWeather = () => {
-  const { lat, lng } = useCoordsStore(
-    (state) => ({
-      lat: state.lat,
-      lng: state.lng,
-    }),
-    shallow
-  );
+  const { city_name } = useLocationStore((state) => ({
+    city_name: state.city_name,
+  }));
 
-  const queryKey = ["currentWeather", lat, lng];
+  const queryKey = ["currentWeather", city_name];
   const fetcher = fetchCurrentWeather;
-
   return useQuery(queryKey, fetcher);
 };
