@@ -30,10 +30,10 @@ export const LocationSelect = () => {
     <>
       <NativeSelect
         data={city_names}
-        value={cityNameValue}
         onChange={(event) => setCityNameValue(event.currentTarget.value)}
-        label="Select your city"
         icon={<FiMapPin />}
+        size="lg"
+        value={cityNameValue}
       />
     </>
   );
