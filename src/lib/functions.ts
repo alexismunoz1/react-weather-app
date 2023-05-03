@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { NextForecastDaysList} from "../hooks/useNextFiveDays";
+import { NextForecastDaysList } from "../hooks/useNextFiveDays";
 
 /**
  * Formats a given date string in the format "YYYY-MM-DD HH:mm:ss"
@@ -75,4 +75,13 @@ export function groupDataByDay(
   });
 
   return groupedData;
+}
+
+export function formatTemperature(tempUnit: string, temp: number): string {
+  const temperature = tempUnit === "c" ? temp : temp * 1.8 + 32;
+
+  return new Intl.NumberFormat("en-US", {
+    style: "unit",
+    unit: tempUnit === "c" ? "celsius" : "fahrenheit",
+  }).format(Math.round(temperature));
 }
