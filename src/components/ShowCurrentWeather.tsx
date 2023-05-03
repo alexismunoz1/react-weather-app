@@ -1,11 +1,11 @@
-import { ForecastType } from "../hooks/types";
+import { ForecastType } from "../hooks/useCurrentWeather";
 
-interface ShowCurrentWeatherProps {
+interface CurrentWeatherProps {
   currentWeatherData: ForecastType;
 }
 export const ShowCurrentWeather = ({
   currentWeatherData,
-}: ShowCurrentWeatherProps) => {
+}: CurrentWeatherProps) => {
   return (
     <>
       <h1>Current Weather</h1>

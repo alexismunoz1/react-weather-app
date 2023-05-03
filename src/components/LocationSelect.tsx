@@ -9,7 +9,7 @@ export const LocationSelect = () => {
 
   useEffect(() => {
     setCityName(value);
-  }, []);
+  }, [value]);
 
   const city_names = ["Buenos Aires", "New York", "Tokyo"];
 
