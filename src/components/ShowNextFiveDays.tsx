@@ -1,14 +1,14 @@
 import { GroupedData } from "../lib/functions";
 
 interface DaysDataProps {
-  DaysData: GroupedData[];
+  data: GroupedData[];
 }
 
-export const ShowNextFiveDays = ({ DaysData }: DaysDataProps) => {
+export const ShowNextFiveDays = ({ data }: DaysDataProps) => {
   return (
     <>
-    <h2>Next 5 Days</h2>
-      {DaysData.map((day) => (
+      <h2>Next 5 Days</h2>
+      {data.map((day) => (
         <div key={day.dayOfWeek}>
           <h4>{day.dayOfWeek}</h4>
           {day.data.map((weather) => (

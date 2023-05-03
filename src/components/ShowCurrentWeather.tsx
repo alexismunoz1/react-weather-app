@@ -1,18 +1,16 @@
 import { ForecastType } from "../hooks/useCurrentWeather";
 
 interface CurrentWeatherProps {
-  currentWeatherData: ForecastType;
+  data: ForecastType;
 }
-export const ShowCurrentWeather = ({
-  currentWeatherData,
-}: CurrentWeatherProps) => {
+export const ShowCurrentWeather = ({ data }: CurrentWeatherProps) => {
   return (
     <>
       <h1>Current Weather</h1>
-      <p>{currentWeatherData.name}</p>
-      <p>{currentWeatherData.weather[0].description}</p>
-      <p>{currentWeatherData.main.temp}</p>
-      <p>{currentWeatherData.main.humidity}</p>
+      <p>{data.name}</p>
+      <p>{data.weather[0].description}</p>
+      <p>{data.main.temp}</p>
+      <p>{data.main.humidity}</p>
     </>
   );
 };

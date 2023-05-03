@@ -1,6 +1,7 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import { openWeatherApi } from "../api/openWeather";
 import { useLocationStore } from "../store/locationStore";
+import { Clouds, Coord, Main, Sys, Weather, Wind } from "../lib/weatherTypes";
 
 export interface ForecastType {
   coord: Coord;
@@ -18,59 +19,32 @@ export interface ForecastType {
   cod: number;
 }
 
-export interface Coord {
-  lon: number;
-  lat: number;
-}
-
-export interface Weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-}
-export interface Main {
-  temp: number;
-  feels_like: number;
-  temp_min: number;
-  temp_max: number;
-  pressure: number;
-  sea_level: number;
-  grnd_level: number;
-  humidity: number;
-  temp_kf: number;
-}
-export interface Wind {
-  speed: number;
-  deg: number;
-  gust: number;
-}
-export interface Clouds {
-  all: number;
-}
-export interface Sys {
-  country: string;
-  sunrise: number;
-  sunset: number;
-}
-
 const fetchCurrentWeather = async (ctx: QueryFunctionContext) => {
-  const [_, city_name] = ctx.queryKey;
-  if (!city_name) return null;
-
+  const [_, lat, lng, cityName] = ctx.queryKey;
   const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-  const url = `weather?q=${city_name}&lang=es&appid=${apiKey}&units=metric`;
-  const { data } = await openWeatherApi.get<ForecastType>(url);
 
+  let url: string;
+  
+  if (cityName) {
+    url = `weather?q=${cityName}&lang=es&appid=${apiKey}&units=metric`;
+  } else if (lat && lng) {
+    url = `weather?lat=${lat}&lon=${lng}&lang=es&appid=${apiKey}&units=metric`;
+  } else {
+    throw new Error("Invalid query params");
+  }
+
+  const { data } = await openWeatherApi.get<ForecastType>(url);
   return data;
 };
 
 export const useCurrentWeather = () => {
-  const { city_name } = useLocationStore((state) => ({
+  const { lat, lng, city_name } = useLocationStore((state) => ({
+    lat: state.lat,
+    lng: state.lng,
     city_name: state.city_name,
   }));
 
-  const queryKey = ["currentWeather", city_name];
+  const queryKey = ["currentWeather", lat, lng, city_name];
   const fetcher = fetchCurrentWeather;
   return useQuery(queryKey, fetcher);
 };
