@@ -78,7 +78,7 @@ export function groupDataByDay(
     }
   });
 
-  return groupedData.slice(1);
+  return groupedData;
 }
 
 /**
