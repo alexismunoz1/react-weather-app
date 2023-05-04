@@ -1,5 +1,4 @@
 import { createStyles, Title } from "@mantine/core";
-import { LocationSelect } from "./LocationSelect";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -19,7 +18,6 @@ export const Header = () => {
       <Title className={classes.title} order={1}>
         Local Weather
       </Title>
-      <LocationSelect />
     </header>
   );
 };

@@ -8,6 +8,8 @@ import { useCurrentWeather } from "./hooks/useCurrentWeather";
 import { useNextFiveDays } from "./hooks/useNextFiveDays";
 import { GroupedData, groupDataByDay } from "./lib/functions";
 import { Container, LoadingOverlay } from "@mantine/core";
+import { LocationSelect } from "./components/LocationSelect";
+import { Footer } from "./components/Footer";
 
 function App() {
   const [nextFiveDaysData, setNextFiveDaysData] = useState<GroupedData[]>();
@@ -29,8 +31,10 @@ function App() {
         exitTransitionDuration={250}
       />
       <Header />
+      <LocationSelect />
       {currentWeatherData && <ShowCurrentWeather data={currentWeatherData} />}
       {nextFiveDaysData && <ShowNextFiveDays data={nextFiveDaysData} />}
+      <Footer />
     </Container>
   );
 }
