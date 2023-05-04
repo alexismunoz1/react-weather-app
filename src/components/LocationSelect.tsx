@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { NativeSelect } from "@mantine/core";
-import { FiMapPin } from "react-icons/fi";
 import { useLocationStore } from "../store/locationStore";
 
 export const LocationSelect = () => {
@@ -31,7 +30,6 @@ export const LocationSelect = () => {
       <NativeSelect
         data={city_names}
         onChange={(event) => setCityNameValue(event.currentTarget.value)}
-        icon={<FiMapPin />}
         size="lg"
         value={cityNameValue}
       />
