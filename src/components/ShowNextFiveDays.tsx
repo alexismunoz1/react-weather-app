@@ -40,13 +40,14 @@ export const ShowNextFiveDays = ({ data }: DaysDataProps) => {
   return (
     <section>
       <Space h="lg" />
-      <Divider my="sm" />
+      <Divider />
       <Title order={2} align="center" my="lg">
         Forecast for the next 5 days
       </Title>
 
       <SimpleGrid
         cols={3}
+        spacing="lg"
         breakpoints={[
           { maxWidth: 1200, cols: 3, spacing: "lg" },
           { maxWidth: 980, cols: 2, spacing: "md" },

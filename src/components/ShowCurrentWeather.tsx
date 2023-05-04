@@ -9,6 +9,7 @@ const useStyles = createStyles(() => ({
     fontWeight: 700,
     lineHeight: 1,
     margin: 0,
+    padding: 10,
     textAlign: "center",
     textTransform: "capitalize",
   },
@@ -41,17 +42,17 @@ export const ShowCurrentWeather = ({ data }: CurrentWeatherProps) => {
     <>
       <Group position="center">
         <Stack>
-          <Title order={2} align="center" my="lg">
+          <Title order={2} align="center" my="lg" mx="lg">
             <FiMapPin /> {data.name}
-            <Text
-              className={classes.description}
-              component="p"
-              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-              variant="gradient"
-            >
-              {currentWeatherDescription}
-            </Text>
           </Title>
+          <Text
+            className={classes.description}
+            component="p"
+            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+            variant="gradient"
+          >
+            {currentWeatherDescription}
+          </Text>
           <Text
             className={classes.bigTemp}
             component="p"
