@@ -1,7 +1,8 @@
 import { ForecastType } from "../hooks/useCurrentWeather";
-import { createStyles, Group, Stack, Text, Title } from "@mantine/core";
+import { Center, createStyles, Group, Stack, Text, Title } from "@mantine/core";
 import { formatTemperature } from "../lib/functions";
 import { FiMapPin } from "react-icons/fi";
+import { WeatherIcon } from "../ui/WeatherIcon";
 
 const useStyles = createStyles(() => ({
   description: {
@@ -42,7 +43,7 @@ export const ShowCurrentWeather = ({ data }: CurrentWeatherProps) => {
     <>
       <Group position="center">
         <Stack>
-          <Title order={2} align="center" my="lg" mx="lg">
+          <Title order={2} align="center" mt={"xl"}>
             <FiMapPin /> {data.name}
           </Title>
           <Text
@@ -61,6 +62,9 @@ export const ShowCurrentWeather = ({ data }: CurrentWeatherProps) => {
           >
             {currentTemperature}
           </Text>
+          <Center>
+            <WeatherIcon icon={data.weather[0].icon} width={250} height={250} />
+          </Center>
           {data.main.feels_like > data.main.temp && (
             <Text
               className={classes.feelsLike}
