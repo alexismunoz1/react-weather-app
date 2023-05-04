@@ -1,7 +1,7 @@
 import { formatTemperature } from "../lib/functions";
 import { GroupedData } from "../lib/functions";
 import { NextDaysCard } from "../ui/NextDaysCard";
-import { SimpleGrid, Space, Title } from "@mantine/core";
+import { Divider, SimpleGrid, Space, Title } from "@mantine/core";
 
 interface DaysDataProps {
   data: GroupedData[];
@@ -40,6 +40,7 @@ export const ShowNextFiveDays = ({ data }: DaysDataProps) => {
   return (
     <section>
       <Space h="lg" />
+      <Divider my="sm" />
       <Title order={2} align="center" my="lg">
         Forecast for the next 5 days
       </Title>
@@ -55,6 +56,7 @@ export const ShowNextFiveDays = ({ data }: DaysDataProps) => {
       >
         {data.map((day, index) => (
           <NextDaysCard
+            key={index}
             dayOfWeek={day.dayOfWeek}
             maxTemp={maxAndMinTemps[index].maxTemp}
             minTemp={maxAndMinTemps[index].minTemp}
