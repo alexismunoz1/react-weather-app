@@ -15,13 +15,11 @@ export const Header = () => {
   const { classes } = useStyles();
 
   return (
-    <>
-      <header className={classes.header}>
-        <Title className={classes.title} order={1}>
-          Local Weather
-        </Title>
-        <LocationSelect />
-      </header>
-    </>
+    <header className={classes.header}>
+      <Title className={classes.title} order={1}>
+        Local Weather
+      </Title>
+      <LocationSelect />
+    </header>
   );
 };
