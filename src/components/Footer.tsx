@@ -3,7 +3,7 @@ import { Center, Anchor } from "@mantine/core";
 export const Footer = () => {
   return (
     <footer>
-      <Center m={"xl"}>
+      <Center my="xl">
         <Anchor
           href="https://openweathermap.org/api"
           target="_blank"

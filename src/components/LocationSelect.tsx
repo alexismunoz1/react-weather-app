@@ -28,7 +28,6 @@ export const LocationSelect = () => {
   return (
     <div>
       <NativeSelect
-        style={{ maxWidth: "500px", margin: "auto" }}
         data={city_names}
         onChange={(event) => setCityNameValue(event.currentTarget.value)}
         size="lg"
