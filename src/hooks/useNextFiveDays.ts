@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import { openWeatherApi } from "../api/openWeather";
-import { useLocationStore } from "../store/locationStore";
+import { useCurrentLocationStore } from "../store/currentLocationStore";
 import {
   City,
   Clouds,
@@ -51,7 +51,7 @@ const fetchNextFiveDays = async (ctx: QueryFunctionContext) => {
 };
 
 export const useNextFiveDays = () => {
-  const { lat, lng, city_name } = useLocationStore((state) => ({
+  const { lat, lng, city_name } = useCurrentLocationStore((state) => ({
     lat: state.lat,
     lng: state.lng,
     city_name: state.city_name,

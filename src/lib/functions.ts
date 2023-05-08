@@ -55,7 +55,7 @@ export function groupDataByDay(
   forecastDays.forEach((day) => {
     const dayOfWeek = formatDate(day.dt_txt);
 
-    const group = groupedData.find((g) => g.dayOfWeek === dayOfWeek);
+    const group = groupedData.find((group) => group.dayOfWeek === dayOfWeek);
 
     const formattedData = {
       hour_of_temp: formatHour(day.dt_txt),

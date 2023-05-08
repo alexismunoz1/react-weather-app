@@ -34,7 +34,12 @@ export const ShowNextForecastDays = ({ data }: DaysDataProps) => {
     const noonData = day.data.find(
       ({ hour_of_temp }) => hour_of_temp === "12:00"
     );
-    return noonData?.weather.icon ?? "";
+
+    if (noonData) {
+      return noonData?.weather.icon;
+    } else {
+      return day.data[0].weather.icon;
+    }
   });
 
   return (

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { NativeSelect } from "@mantine/core";
-import { useLocationStore } from "../store/locationStore";
+import { useCurrentLocationStore } from "../store/currentLocationStore";
 
 export const LocationSelect = () => {
-  const { setCityName, setCoords } = useLocationStore();
+  const { setCityName, setCoords } = useCurrentLocationStore();
   const [cityNameValue, setCityNameValue] = useState("Buenos Aires");
 
   useEffect(() => {
@@ -29,9 +29,9 @@ export const LocationSelect = () => {
     <div>
       <NativeSelect
         data={city_names}
+        value={cityNameValue}
         onChange={(event) => setCityNameValue(event.currentTarget.value)}
         size="lg"
-        value={cityNameValue}
       />
     </div>
   );
