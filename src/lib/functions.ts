@@ -53,7 +53,10 @@ export function groupDataByDay(
   const groupedData: Array<GroupedData> = [];
 
   forecastDays.forEach((day) => {
-    const dayOfWeek = formatDate(day.dt_txt);
+    let dayOfWeek = formatDate(day.dt_txt);
+    const { today, tomorrow } = getCurrentDay();
+    if (dayOfWeek === today) dayOfWeek = "Today";
+    if (dayOfWeek === tomorrow) dayOfWeek = "Tomorrow";
 
     const group = groupedData.find((group) => group.dayOfWeek === dayOfWeek);
 
@@ -95,3 +98,23 @@ export function formatTemperature(tempUnit: string, temp: number): string {
     unit: tempUnit === "c" ? "celsius" : "fahrenheit",
   }).format(Math.round(temperature));
 }
+
+export const getCurrentDay = () => {
+  const WEEK_DAYS = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const currentDate = new Date();
+  const today = WEEK_DAYS[currentDate.getDay()];
+  currentDate.setDate(currentDate.getDate() + 1);
+  const tomorrow = WEEK_DAYS[currentDate.getDay()];
+  return {
+    today,
+    tomorrow,
+  };
+};
