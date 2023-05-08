@@ -8,7 +8,7 @@ interface CoordsStore {
   setCoords: (lat: number | null, lng: number | null) => void;
 }
 
-export const useLocationStore = create<CoordsStore>((set) => ({
+export const useCurrentLocationStore = create<CoordsStore>((set) => ({
   lat: null,
   lng: null,
   city_name: "",
